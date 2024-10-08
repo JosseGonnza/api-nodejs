@@ -4,18 +4,20 @@ import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import {UserRouter} from "./router/user.router";
+import {ConfigServer} from "./config/config";
 
-class ServerBootstrap {
+class ServerBootstrap extends ConfigServer{
     public app: express.Application = express();
-    private port: number = 8000;
+    private port: number = this.getNumberEnv("PORT");
 
     constructor() {
+        super();
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(morgan('dev'));
         this.app.use(cors());
 
-        this.app.use('/api', this.routers())
+        this.app.use("/api", this.routers())
         this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
         this.listen();
     }
@@ -24,10 +26,9 @@ class ServerBootstrap {
         return [new UserRouter().router];
     }
 
-
     public listen() {
         this.app.listen(this.port, () => {
-            console.log(`Server listening on port: ${this.port}`)
+            console.log("Server listening on port: " + this.port)
         });
     }
 }
