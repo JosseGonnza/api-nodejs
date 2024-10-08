@@ -8,5 +8,16 @@ export class UserRouter extends BaseRouter<UserQueryController> {
 
     routes() {
         this.router.get('/user', (req, res) => this.controller.getUsers(req, res));
+        /**
+         * @swagger
+         * /api/user/:
+         *      get:
+         *          summary: Obtener un listado de usuarios.
+         *          tags:
+         *              - User
+         *          responses:
+         *              200:
+         *                  description: Usuarios obtenidos con éxito.
+         * */
     }
 }

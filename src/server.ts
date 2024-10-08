@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger";
 import {UserRouter} from "./router/user.router";
 
 class ServerBootstrap {
@@ -14,12 +16,14 @@ class ServerBootstrap {
         this.app.use(cors());
 
         this.app.use('/api', this.routers())
+        this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
         this.listen();
     }
 
     routers(): Array<express.Router> {
         return [new UserRouter().router];
     }
+
 
     public listen() {
         this.app.listen(this.port, () => {
