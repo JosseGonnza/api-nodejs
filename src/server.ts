@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import {UserRouter} from "./router/user.router";
 import {ConfigServer} from "./config/config";
+import {DataSource} from "typeorm";
 
 class ServerBootstrap extends ConfigServer{
     public app: express.Application = express();
@@ -14,6 +15,9 @@ class ServerBootstrap extends ConfigServer{
         super();
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+
+        this.dbConnect();
+
         this.app.use(morgan('dev'));
         this.app.use(cors());
 
@@ -24,6 +28,13 @@ class ServerBootstrap extends ConfigServer{
 
     routers(): Array<express.Router> {
         return [new UserRouter().router];
+    }
+
+    //TODO: Saber si así esta bien....
+    async dbConnect(): Promise<DataSource> {
+        const myDataSource = new DataSource(this.typeORMConfig);
+        await myDataSource.initialize();
+        return myDataSource;
     }
 
     public listen() {
