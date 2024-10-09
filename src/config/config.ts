@@ -1,6 +1,4 @@
 import * as dotenv from "dotenv";
-import { ConnectionOptions } from "typeorm";
-import { SnakeNamingStrategy } from "typeorm-naming-strategies"
 
 export abstract class ConfigServer {
     protected constructor() {
@@ -34,19 +32,19 @@ export abstract class ConfigServer {
         return "." + arrEnv.join("."); // ['hola', 'mundo'] => 'hola.mundo'
     }
 
-    public get typeORMConfig(): ConnectionOptions {
-        return {
-            type: "mysql",
-            host: this.getEnvironment("DB_HOST"),
-            port: this.getNumberEnv("DB_PORT"),
-            username: this.getEnvironment("DB_USER"),
-            password: this.getEnvironment("DB_PASSWORD"),
-            database: this.getEnvironment("DB_DATABASE"),
-            entities: [...__dirname + "/../**/*.entity{.ts,.js}"],
-            migrations: [__dirname + "/../../migrations/*{.ts,.js}"],
-            synchronize: true,
-            logging: false,
-            namingStrategy: new SnakeNamingStrategy(),
-        }
-    }
+    // public get typeORMConfig(): DataSourceOptions  {
+    //     return {
+    //         type: "mysql",
+    //         host: this.getEnvironment("DB_HOST"),
+    //         port: this.getNumberEnv("DB_PORT"),
+    //         username: this.getEnvironment("DB_USER"),
+    //         password: this.getEnvironment("DB_PASSWORD"),
+    //         database: this.getEnvironment("DB_DATABASE"),
+    //         entities: [...__dirname + "/../**/*.entity{.ts,.js}"],
+    //         migrations: [__dirname + "/../../migrations/*{.ts,.js}"],
+    //         synchronize: true,
+    //         logging: false,
+    //         namingStrategy: new SnakeNamingStrategy(),
+    //     }
+    // }
 }
