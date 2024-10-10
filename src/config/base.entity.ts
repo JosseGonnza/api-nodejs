@@ -6,7 +6,7 @@ export abstract class BaseEntity {
 
     @CreateDateColumn({
         name: "created_ad",
-        type: "timestamp"
+        type: "time"
     })
     createdAt!: Date;
 

@@ -8,7 +8,7 @@ services:
       - "3312:3306"
     environment:
       MYSQL_DATABASE: node_db
-      MYSQL_ROOT_USER: josse
+      MYSQL_ROOT_USERNAME: josse
       MYSQL_USER: josse
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_PASSWORD: secret
