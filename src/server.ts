@@ -8,7 +8,7 @@ import {dataSource} from "./data-source";
 
 class ServerBootstrap {
     public app: express.Application = express();
-    private port: number = 8000;
+    private port: number = 3312;
 
     constructor() {
         dataSource.initialize()
@@ -18,7 +18,7 @@ class ServerBootstrap {
                 this.app.use(morgan('dev'));
                 this.app.use(cors());
 
-                this.app.use("/api", this.routers())
+                this.app.use("/api", this.routers());
                 this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
                 this.listen();
             })

@@ -1,12 +1,20 @@
-import {BaseEntity, Column, Entity} from "typeorm";
+import {BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Relation} from "typeorm";
+import {UserEntity} from "../../../user/domain/entities/user.entity";
+import {ComicEntity} from "../../../comic/domain/entities/comic.entity";
 
 @Entity({ name: "userComic" })
-export class UserComicEntity extends BaseEntity {
+export class UserComicEntity {
+    @PrimaryGeneratedColumn("uuid")
+    id!: string;
     @Column()
-    public userId!: string;
+    userId!: string;
     @Column()
-    public comicIds!: string[];
+    comicId!: string;
 
-    // public user!: UserEntity;
-    // public comic!: ComicEntity;
+    @OneToOne(() => UserEntity, (user) => user.userComics)
+    @JoinColumn()
+    user!: Relation<UserEntity>;
+    @OneToOne(() => ComicEntity, (comic) => comic.userComics)
+    @JoinColumn()
+    comic!: Relation<ComicEntity[]>;
 }

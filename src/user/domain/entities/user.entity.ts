@@ -1,8 +1,19 @@
-import {BaseEntity, Column, Entity} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    JoinColumn, ManyToOne,
+    OneToOne,
+    PrimaryColumn,
+    PrimaryGeneratedColumn,
+    Relation
+} from "typeorm";
 import {UserComicEntity} from "../../../userComic/domain/entities/userComic.entity";
 
 @Entity({ name: "user" })
-export class UserEntity extends BaseEntity {
+export class UserEntity {
+    @PrimaryGeneratedColumn("uuid")
+    id!: number;
     @Column()
     nickName!: string;
     @Column()
@@ -17,6 +28,8 @@ export class UserEntity extends BaseEntity {
     password!: string;
     @Column()
     phone!: number;
-    @Column()
-    userComics!: UserComicEntity[];
+    @ManyToOne(() => UserComicEntity, (userComic) => userComic.user, {
+        cascade: true,
+    })
+    userComics!: Relation<UserComicEntity>[];
 }

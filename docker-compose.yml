@@ -1,5 +1,5 @@
 services:
-  node_db:
+  api_node_db:
     image: mysql:5.7
     volumes:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
