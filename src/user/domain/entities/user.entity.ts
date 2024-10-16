@@ -4,7 +4,7 @@ import {UserComicEntity} from "../../../userComic/domain/entities/userComic.enti
 @Entity({ name: "users" })
 export class UserEntity {
     @PrimaryGeneratedColumn("uuid")
-    id!: number;
+    id!: string;
 
     @Column({
         unique: true
