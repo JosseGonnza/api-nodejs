@@ -3,8 +3,8 @@ import morgan from "morgan";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
-import {UserRouter} from "./router/user.router";
 import {dataSource} from "./data-source";
+import router from "./router/router";
 
 class ServerBootstrap {
     public app: express.Application = express();
@@ -17,16 +17,11 @@ class ServerBootstrap {
                 this.app.use(express.urlencoded({ extended: true }));
                 this.app.use(morgan('dev'));
                 this.app.use(cors());
-
-                this.app.use("/api", this.routers());
+                this.app.use("/api", router);
                 this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
                 this.listen();
             })
             .catch((error) => console.log(error))
-    }
-
-    routers(): Array<express.Router> {
-        return [new UserRouter().router];
     }
 
     public listen() {
